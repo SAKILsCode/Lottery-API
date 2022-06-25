@@ -85,7 +85,7 @@ class MyDB {
   }
 
   /**
-   * Update ticket info by username
+   * Update infos of all tickets by username
    * @param {string} username
    * @param {{username: string, price: number}} ticketBody
    * @returns {Array<Ticket>}
