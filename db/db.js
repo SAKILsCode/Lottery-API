@@ -69,7 +69,7 @@ class MyDB {
   }
 
   /**
-   * Update ticket info.
+   * Update ticket info by id.
    * As the whole system is running over an object and also we are not destructuring anything, so the operations are mutable (Modify the original object)
    * @param {string} ticketId
    * @param {{username: string, price: number}} ticketBody
@@ -84,11 +84,34 @@ class MyDB {
     return ticket;
   }
 
-  // updateByUsername(username, ticketBody) {}
+  /**
+   * Update ticket info by username
+   * @param {string} username
+   * @param {{username: string, price: number}} ticketBody
+   * @returns {Array<Ticket>}
+   */
+  updateByUsername(username, ticketBody) {
+    let index = 0;
+    let updatedTickets = [];
+
+    while (index < this.tickets.length) {
+      const ticket = this.tickets[index];
+      if (ticket.username !== username) continue;
+
+      ticket.username = ticketBody.username ?? ticket.username;
+      ticket.price = ticketBody.price ?? ticket.price;
+      ticket.updatedAt = new Date();
+
+      updatedTickets.push(ticket);
+      index++;
+    }
+    return updatedTickets;
+  }
 
   /**
-   * Delete ticket from DB
+   * Delete ticket from DB by id
    * @param {string} ticketId
+   * @returns {boolean}
    */
   deleteById(ticketId) {
     const index = this.tickets.findIndex((ticket) => ticket.id === ticketId);
@@ -99,7 +122,24 @@ class MyDB {
     } else return false;
   }
 
-  // deleteByUsername(username) {}
+  /**
+   * Delete all ticket from DB by username
+   * @param {string} username\
+   * @returns {boolean}
+   */
+  deleteByUsername(username) {
+    let index = 0;
+    while (index < this.tickets.length) {
+      if (this.tickets[index].username !== username) {
+        if (index === (this.tickets.length - 1)) return false;
+        continue;
+      }
+
+      // this will always decrease one element of the "this.tickets" array
+      this.tickets.splice(index, 1);
+    }
+    return true;
+  }
 
   /**
    * Find Winner

@@ -15,21 +15,6 @@ router.patch('/t/:ticketId', (req, res) => {
   res.status(200).json({ message: 'Updated Successfully', updatedTicket });
 });
 
-// Delete a ticket by id
-router.delete('/t/:ticketId', (req, res) => {
-  const ticketId = req.params.ticketId;
-  db.deleteById(ticketId);
-  res.status(203).send();
-});
-
-// Finding a single ticket by username
-router.get('/u/:username', (req, res) => {
-  const username = req.params.username;
-  const tickets = db.findByUsername(username);
-  res.status(200).json(tickets);
-});
-
-/*
 // Updating tickets by username
 router.patch('/u/:username', (req, res) => {
   const username = req.params.username;
@@ -37,13 +22,28 @@ router.patch('/u/:username', (req, res) => {
   res.status(200).json({ message: 'Updated Successfully', updatedTickets });
 });
 
+// Delete a ticket by id
+router.delete('/t/:ticketId', (req, res) => {
+  const ticketId = req.params.ticketId;
+  db.deleteById(ticketId);
+  res.status(203).send();
+});
+
+// Finding tickets by username
+router.get('/u/:username', (req, res) => {
+  const username = req.params.username;
+  const tickets = db.findByUsername(username);
+  res.status(200).json(tickets);
+});
+
+// /*
 // Delete all tickets for a given user
 router.delete('/u/:username', (req, res) => {
   const username = req.params.username;
   db.deleteByUsername(username);
   res.status(203).send();
 });
-*/
+// */
 
 // Create a single ticket
 router.post('/sell', (req, res) => {
